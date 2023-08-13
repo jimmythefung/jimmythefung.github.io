@@ -1,0 +1,11 @@
+// See explanation of tsconfig or jsconfig about "baseUrl" and "paths"
+// https://github.com/vercel/next.js/tree/canary/examples/with-absolute-imports
+{
+    "compilerOptions": {
+        // Using "paths" allows you to configure module path aliases
+        // such as, in _app.js, it has: import "@/styles/globals.css"
+        "paths": {
+            "@/*": ["./src/*"]
+        }
+    }
+}
