@@ -1,0 +1,7 @@
+.layout {
+    display: flex;
+    flex-direction: column;
+    padding-top: 5vh;
+    height: 100vh;
+    justify-content: space-between;
+}

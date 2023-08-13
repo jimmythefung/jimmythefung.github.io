@@ -1,0 +1,25 @@
+/* Footer */
+.footer {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    height: 5vh;
+    align-items: center;
+    list-style: none;
+    background-color: black;
+    justify-content: center;
+}
+.footer__item {
+    display: inline-block;
+}
+.footer__item a {
+    font-size: 1rem;
+    text-decoration: none;
+    color: white;
+    margin: 0 1rem;
+}
+
+.footer__item a:hover,
+.footer__item a:active {
+    color: #ccc;
+}
