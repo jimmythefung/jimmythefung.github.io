@@ -61,15 +61,20 @@ export function get_ai_move(currentBoard, p1, p2) {
     return column;
 }
 
-export function get_monte_carlo_move_for_p1(currentBoard, p1, p2) {
-    let simulation_counts = 10000;
+export function get_monte_carlo_move_for_p1(
+    currentBoard,
+    p1,
+    p2,
+    simulation_counts
+) {
     let probabilities = play_n_games_per_column(
         simulation_counts,
         copy_board(currentBoard),
         p1,
         p2
     );
-    console.log(probabilities);
+    let prob_str = probabilities.map( (e, i) => (i + ": " + e) ).join(', ');
+    console.log(p1 + ": " + prob_str);
     let column_pick = probabilities.indexOf(Math.max(...probabilities));
     return column_pick;
 }
@@ -166,7 +171,6 @@ function play_n_games_per_column(n, currentBoard, p1, p2) {
     return columns_probability;
 }
 
-
 function play_p1_to_finish(currentBoard, p1_pick, p1, p2) {
     let newBoard = copy_board(currentBoard);
     let n_columns = newBoard[0].length;
@@ -188,7 +192,11 @@ function play_p1_to_finish(currentBoard, p1_pick, p1, p2) {
         if (placed_ok) {
             player_turn = player_turn === p1 ? p2 : p1;
         }
-        placed_ok = place_token(random_column(n_columns), newBoard, player_turn);
+        placed_ok = place_token(
+            random_column(n_columns),
+            newBoard,
+            player_turn
+        );
     }
 
     if (player_turn === p1) {

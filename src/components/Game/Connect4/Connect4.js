@@ -19,12 +19,12 @@ export default function Connect4({ m, n }) {
         // Game continues
         if (currentPlayer === rules.PLAYER1) {
             if (p1UsesAI) {
-                handle_ai();
+                handle_ai(500);
             } else {
                 handle_p1();
             }
         } else {
-            handle_ai();
+            handle_ai(1000);
         }
     }
 
@@ -55,7 +55,7 @@ export default function Connect4({ m, n }) {
         }
     }
 
-    function handle_ai() {
+    function handle_ai(ai_level) {
         if (typeof window !== "undefined") {
             var backdrop = document.querySelector(".backdrop");
             backdrop.style.display = "block";
@@ -66,10 +66,11 @@ export default function Connect4({ m, n }) {
             let column = rules.get_monte_carlo_move_for_p1(
                 currentBoard,
                 currentPlayer,
-                otherPlayer
+                otherPlayer,
+                ai_level
             );
             place_token_and_end_turn(column);
-        }, 1);
+        }, 1000);
     }
 
     function get_other_player() {
