@@ -2,8 +2,8 @@
 // Interface
 // *****************
 let BLANK = "";
-export const PLAYER1 = "R";
-export const PLAYER2 = "G";
+export const PLAYER1 = "Red";
+export const PLAYER2 = "Green";
 
 export function create_board(m, n) {
     let empty_board = Array.from(Array(m), () => new Array(n).fill(BLANK));
@@ -62,7 +62,7 @@ export function get_ai_move(currentBoard, p1, p2) {
 }
 
 export function get_monte_carlo_move_for_p1(currentBoard, p1, p2) {
-    let simulation_counts = 100;
+    let simulation_counts = 10000;
     let probabilities = play_n_games_per_column(
         simulation_counts,
         copy_board(currentBoard),
@@ -166,6 +166,7 @@ function play_n_games_per_column(n, currentBoard, p1, p2) {
     return columns_probability;
 }
 
+
 function play_p1_to_finish(currentBoard, p1_pick, p1, p2) {
     let newBoard = copy_board(currentBoard);
     let n_columns = newBoard[0].length;
@@ -176,21 +177,28 @@ function play_p1_to_finish(currentBoard, p1_pick, p1, p2) {
     }
 
     // p1 plays the given column
-    place_token(p1_pick, newBoard, p1);
+    let player_turn = p1;
+    let placed_ok = place_token(p1_pick, newBoard, player_turn);
+    if (!placed_ok) {
+        return false;
+    }
 
     // Run the game til the end
-    let player_turn = p1;
-    let random_pick = 0;
     while (!check_winner(newBoard)) {
-        player_turn = player_turn === p1 ? p2 : p1;
-        random_pick = Math.floor(Math.random() * (n_columns + 1));
-        place_token(random_pick, newBoard, player_turn);
+        if (placed_ok) {
+            player_turn = player_turn === p1 ? p2 : p1;
+        }
+        placed_ok = place_token(random_column(n_columns), newBoard, player_turn);
     }
 
     if (player_turn === p1) {
         return true;
     }
     return false;
+}
+
+function random_column(n_columns) {
+    return Math.floor(Math.random() * (n_columns + 1));
 }
 
 function copy_board(current_board) {

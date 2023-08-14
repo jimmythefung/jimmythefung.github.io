@@ -20,12 +20,18 @@
     display: none;
     z-index: 200;
     top: 1%;
-    left: 41%;
+    left: 20%;
     width: fit-content;
     background: white;
     padding: 1rem;
     border: 1px solid #ccc;
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+@media (min-width: 40rem) {
+    .modal {
+        left: 41%;
+    }
 }
 
 .modal__title {

@@ -10,17 +10,15 @@ export default function Connect4({ m, n }) {
     const [currentPlayer, setCurrentPlayer] = useState(rules.PLAYER1);
     let otherPlayer = get_other_player();
     let isGameOver = rules.check_winner(currentBoard);
-    let p1UsesAI = false;
+    let p1UsesAI = true;
 
     // Check winner
     if (isGameOver) {
-        utils.openModal(
-            "Victory: " + (currentPlayer === rules.PLAYER2 ? "You" : "PC")
-        );
+        utils.openModal("Victory: " + otherPlayer);
     } else {
         // Game continues
         if (currentPlayer === rules.PLAYER1) {
-            if (p1UsesAI){
+            if (p1UsesAI) {
                 handle_ai();
             } else {
                 handle_p1();
@@ -71,7 +69,7 @@ export default function Connect4({ m, n }) {
                 otherPlayer
             );
             place_token_and_end_turn(column);
-        }, 1000);
+        }, 1);
     }
 
     function get_other_player() {
