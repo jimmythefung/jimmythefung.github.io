@@ -10,17 +10,18 @@ export function create_board(m, n) {
     return empty_board;
 }
 
-export function place_token(column, gameBoard, symbol) {
+export function place_token(column, currentBoard, symbol) {
+    if (column_is_full(currentBoard, column)) {
+        return false;
+    }
     // Drop the token to the bottom at the given column
-    // Note: slice is neccessary to trigger react to refresh/update the board
-    for (let r = gameBoard.length - 1; r >= 0; r--) {
-        if (gameBoard[r][column] === BLANK) {
+    for (let r = currentBoard.length - 1; r >= 0; r--) {
+        if (currentBoard[r][column] === BLANK) {
             // Place the player's token based on the turn
-            gameBoard[r][column] = symbol;
+            currentBoard[r][column] = symbol;
             return true;
         }
     }
-    return false;
 }
 
 export function check_winner(board) {
@@ -73,7 +74,7 @@ export function get_monte_carlo_move_for_p1(
         p1,
         p2
     );
-    let prob_str = probabilities.map( (e, i) => (i + ": " + e) ).join(', ');
+    let prob_str = probabilities.map( (e, i) => ("c"+i + "=" + e) ).join(', ');
     console.log(p1 + ": " + prob_str);
     let column_pick = probabilities.indexOf(Math.max(...probabilities));
     return column_pick;
@@ -160,13 +161,18 @@ function play_n_games_per_column(n, currentBoard, p1, p2) {
     const columns_probability = [];
     const n_columns = currentBoard[0].length;
     for (let col_pick = 0; col_pick < n_columns; col_pick++) {
-        let wins = 0;
-        for (let count = 0; count < n; count++) {
-            if (play_p1_to_finish(currentBoard, col_pick, p1, p2)) {
-                wins++;
+        if (column_is_full(currentBoard, col_pick)) {
+            // -1 signals invalid placement. (Not even a probability of 0).
+            columns_probability.push(-1);
+        } else {
+            let wins = 0;
+            for (let count = 0; count < n; count++) {
+                if (play_p1_to_finish(currentBoard, col_pick, p1, p2)) {
+                    wins++;
+                }
             }
+            columns_probability.push(wins / n);
         }
-        columns_probability.push(wins / n);
     }
     return columns_probability;
 }
@@ -207,6 +213,10 @@ function play_p1_to_finish(currentBoard, p1_pick, p1, p2) {
 
 function random_column(n_columns) {
     return Math.floor(Math.random() * (n_columns + 1));
+}
+
+function column_is_full(board, col) {
+    return board[0][col] !== BLANK;
 }
 
 function copy_board(current_board) {

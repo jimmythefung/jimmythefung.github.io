@@ -10,7 +10,7 @@ export default function Connect4({ m, n }) {
     const [currentPlayer, setCurrentPlayer] = useState(rules.PLAYER1);
     let otherPlayer = get_other_player();
     let isGameOver = rules.check_winner(currentBoard);
-    let p1UsesAI = true;
+    let p1UsesAI = false;
 
     // Check winner
     if (isGameOver) {
@@ -24,7 +24,7 @@ export default function Connect4({ m, n }) {
                 handle_p1();
             }
         } else {
-            handle_ai(1000);
+            handle_ai(500);
         }
     }
 
