@@ -1,7 +1,8 @@
-import styles from "./connect4.module.css";
+import Board from "./Board";
 import Layout from "../../UI/Layout";
+import styles from "./connect4.module.css";
 import { useEffect, useState } from "react";
-import * as utils from "../../scripts/utils.js";
+// import * as utils from "../../scripts/utils.js";
 import * as rules from "../../scripts/c4rules.js";
 
 export default function Connect4({ m, n }) {
@@ -14,7 +15,9 @@ export default function Connect4({ m, n }) {
 
     // Check winner
     if (isGameOver) {
-        utils.openModal("Victory: " + otherPlayer);
+        let msg = "Victory: " + otherPlayer;
+        // utils.openModal(msg);
+        alert(msg);
     } else {
         // Game continues
         if (currentPlayer === rules.PLAYER1) {
@@ -51,14 +54,14 @@ export default function Connect4({ m, n }) {
     function handle_p1() {
         if (typeof window !== "undefined") {
             var backdrop = document.querySelector(".backdrop");
-            backdrop.style.display = "none";
+            // backdrop.style.display = "none";
         }
     }
 
     function handle_ai(ai_level) {
         if (typeof window !== "undefined") {
             var backdrop = document.querySelector(".backdrop");
-            backdrop.style.display = "block";
+            // backdrop.style.display = "block";
         }
 
         setTimeout(() => {
@@ -97,15 +100,6 @@ export default function Connect4({ m, n }) {
                     <h2>Player Turn: {currentPlayer}</h2>
                 </div>
 
-                <div className={`${styles["game-div"]}`}>
-                    <audio loop controls>
-                        <source
-                            src="/ebi_tempura.mp3"
-                            type="audio/mpeg"
-                        ></source>
-                    </audio>
-                </div>
-
                 {/* Not displayed by default */}
                 <div className="backdrop"></div>
 
@@ -125,53 +119,5 @@ export default function Connect4({ m, n }) {
                 </div>
             </div>
         </Layout>
-    );
-}
-
-// **********************
-// Game board components
-// **********************
-function Board({ current_board, onCellClick }) {
-    let m_rows = current_board.length;
-    let n_columns = current_board[0].length;
-
-    // Build up a board made of columns
-    let full_board = [];
-    for (let c = 0; c < n_columns; c++) {
-        // Construct a column
-        let a_column = [];
-        for (let r = 0; r < m_rows; r++) {
-            let index = "(" + r.toString() + ", " + c.toString() + ")";
-            a_column.push(
-                <Cell
-                    key={index}
-                    text={current_board[r][c]}
-                    row={r}
-                    col={c}
-                    clickHandler={onCellClick}
-                />
-            );
-        }
-
-        // Add column to board
-        full_board.push(
-            <div key={c} className={`${styles.column}`}>
-                {a_column}
-            </div>
-        );
-    }
-    return <div className={`${styles.board}`}>{full_board}</div>;
-}
-
-function Cell({ text, row, col, clickHandler }) {
-    return (
-        <div
-            className={`
-                ${styles.cell} 
-                ${text === rules.PLAYER1 ? styles.player1 : ""}
-                ${text === rules.PLAYER2 ? styles.player2 : ""}
-            `}
-            onClick={() => clickHandler(row, col)}
-        ></div>
     );
 }
