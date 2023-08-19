@@ -11,6 +11,11 @@ export default function Connect4({ m, n }) {
     const [currentBoard, setCurrentBoard] = useState(rules.create_board(m, n));
     const [col_select, setColSelect] = useState(0);
     const [currentPlayer, setCurrentPlayer] = useState(rules.PLAYER1);
+
+    // History mechanics
+    const [history, setHistory] = useState([rules.create_board(m, n)]);
+    const [currentMove, setCurrentMove] = useState(0);
+
     let otherPlayer = get_other_player();
     let isGameOver = rules.check_winner(currentBoard);
     let p1UsesAI = false;
@@ -50,6 +55,9 @@ export default function Connect4({ m, n }) {
 
             // End turn
             setCurrentPlayer(otherPlayer);
+            const nextHistory = [...history, newBoard];
+            setHistory(nextHistory);
+            setCurrentMove(currentMove + 1);
             return true;
         }
         return false;
@@ -98,6 +106,7 @@ export default function Connect4({ m, n }) {
                 </div>
 
                 <div className={`${styles["game-div"]}`}>
+                    <h2>Turn: {currentMove}</h2>
                     <h2>Player Turn: {currentPlayer}</h2>
                 </div>
 
