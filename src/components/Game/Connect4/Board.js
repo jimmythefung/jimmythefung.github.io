@@ -1,5 +1,5 @@
 import Cell from "./Cell";
-import styles from "./connect4.module.css";
+import styles from "./board.module.css";
 
 export default function Board({ current_board, onCellClick }) {
     let m_rows = current_board.length;
@@ -15,7 +15,7 @@ export default function Board({ current_board, onCellClick }) {
             a_column.push(
                 <Cell
                     key={index}
-                    text={current_board[r][c]}
+                    player={current_board[r][c]}
                     row={r}
                     col={c}
                     clickHandler={onCellClick}

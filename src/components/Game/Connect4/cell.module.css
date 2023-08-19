@@ -1,0 +1,23 @@
+.cell {
+    height: calc(100vw/7.5);
+    width: calc(100vw/7.5);
+    border: solid 1px blue;
+    border-radius: 50%;
+    background-color: lightyellow;
+    display: inline-block;
+}
+
+.player1 {
+    background-color: red;
+}
+
+.player2 {
+    background-color: green;
+}
+
+@media (min-width: 40rem) {
+    .cell {
+        height: min(calc(100vh/10), calc(100vw/7.5));
+        width: min(calc(100vh/10), calc(100vw/7.5));
+    }
+}

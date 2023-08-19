@@ -1,11 +1,12 @@
 import Board from "./Board";
 import Layout from "../../UI/Layout";
 import styles from "./connect4.module.css";
-import { useEffect, useState } from "react";
-// import * as utils from "../../scripts/utils.js";
+import { useEffect, useState, useRef } from "react";
+import * as utils from "../../scripts/utils.js";
 import * as rules from "../../scripts/c4rules.js";
 
 export default function Connect4({ m, n }) {
+    const backdropref = useRef(null);
     const [currentBoard, setCurrentBoard] = useState(rules.create_board(m, n));
     const [col_select, setColSelect] = useState(0);
     const [currentPlayer, setCurrentPlayer] = useState(rules.PLAYER1);
@@ -16,15 +17,14 @@ export default function Connect4({ m, n }) {
     // Check winner
     if (isGameOver) {
         let msg = "Victory: " + otherPlayer;
-        // utils.openModal(msg);
-        alert(msg);
+        utils.openModal(msg);
     } else {
         // Game continues
         if (currentPlayer === rules.PLAYER1) {
             if (p1UsesAI) {
                 handle_ai(500);
             } else {
-                handle_p1();
+                handle_p1(backdropref);
             }
         } else {
             handle_ai(500);
@@ -51,19 +51,16 @@ export default function Connect4({ m, n }) {
         return false;
     }
 
-    function handle_p1() {
-        if (typeof window !== "undefined") {
-            var backdrop = document.querySelector(".backdrop");
-            // backdrop.style.display = "none";
+    function handle_p1(backdropref) {
+        if (backdropref.current) {
+            backdropref.current.style.display = "none";
         }
     }
 
     function handle_ai(ai_level) {
-        if (typeof window !== "undefined") {
-            var backdrop = document.querySelector(".backdrop");
-            // backdrop.style.display = "block";
+        if (backdropref.current) {
+            backdropref.current.style.display = "block";
         }
-
         setTimeout(() => {
             // let column = rules.get_ai_move(currentBoard, currentPlayer, otherPlayer);
             let column = rules.get_monte_carlo_move_for_p1(
@@ -101,7 +98,7 @@ export default function Connect4({ m, n }) {
                 </div>
 
                 {/* Not displayed by default */}
-                <div className="backdrop"></div>
+                <div ref={backdropref} className="backdrop"></div>
 
                 <div className="modal">
                     <h1 className="modal__title">Game!</h1>
