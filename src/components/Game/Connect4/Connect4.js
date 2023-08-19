@@ -1,4 +1,5 @@
 import Board from "./Board";
+import Spinner from "./Spinner";
 import Layout from "../../UI/Layout";
 import styles from "./connect4.module.css";
 import { useEffect, useState, useRef } from "react";
@@ -18,6 +19,9 @@ export default function Connect4({ m, n }) {
     if (isGameOver) {
         let msg = "Victory: " + otherPlayer;
         utils.openModal(msg);
+        if (backdropref.current) {
+            backdropref.current.style.display = "none";
+        }
     } else {
         // Game continues
         if (currentPlayer === rules.PLAYER1) {
@@ -98,7 +102,9 @@ export default function Connect4({ m, n }) {
                 </div>
 
                 {/* Not displayed by default */}
-                <div ref={backdropref} className="backdrop"></div>
+                <div ref={backdropref} className="backdrop">
+                    <Spinner />
+                </div>
 
                 <div className="modal">
                     <h1 className="modal__title">Game!</h1>
