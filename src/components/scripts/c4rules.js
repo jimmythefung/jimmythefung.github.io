@@ -80,6 +80,13 @@ export function get_monte_carlo_move_for_p1(
     return column_pick;
 }
 
+export function copy_board(current_board) {
+    let newBoard = current_board.map(function (arr) {
+        return arr.slice();
+    });
+    return newBoard;
+}
+
 // *****************
 // Helpers
 // *****************
@@ -217,11 +224,4 @@ function random_column(n_columns) {
 
 function column_is_full(board, col) {
     return board[0][col] !== BLANK;
-}
-
-function copy_board(current_board) {
-    let newBoard = current_board.map(function (arr) {
-        return arr.slice();
-    });
-    return newBoard;
 }

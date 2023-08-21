@@ -14,7 +14,7 @@ export default function Connect4({ m, n }) {
 
     // History mechanics
     const [history, setHistory] = useState([rules.create_board(m, n)]);
-    const [currentMove, setCurrentMove] = useState(0);
+    const [selectedTurn, setSelectedTurn] = useState(0);
 
     let otherPlayer = get_other_player();
     let isGameOver = rules.check_winner(currentBoard);
@@ -42,8 +42,10 @@ export default function Connect4({ m, n }) {
 
     function handleCellClick(row, column) {
         if (!isGameOver) {
-            setColSelect(column);
-            place_token_and_end_turn(column);
+            if (selectedTurn % 2 == 0) {
+                setColSelect(column);
+                place_token_and_end_turn(column);
+            }
         }
     }
 
@@ -55,9 +57,9 @@ export default function Connect4({ m, n }) {
 
             // End turn
             setCurrentPlayer(otherPlayer);
-            const nextHistory = [...history, newBoard];
+            const nextHistory = [...history.slice(0, selectedTurn + 1), rules.copy_board(newBoard)];
             setHistory(nextHistory);
-            setCurrentMove(currentMove + 1);
+            setSelectedTurn(nextHistory.length - 1);
             return true;
         }
         return false;
@@ -74,7 +76,6 @@ export default function Connect4({ m, n }) {
             backdropref.current.style.display = "block";
         }
         setTimeout(() => {
-            // let column = rules.get_ai_move(currentBoard, currentPlayer, otherPlayer);
             let column = rules.get_monte_carlo_move_for_p1(
                 currentBoard,
                 currentPlayer,
@@ -89,6 +90,20 @@ export default function Connect4({ m, n }) {
         return currentPlayer === rules.PLAYER1 ? rules.PLAYER2 : rules.PLAYER1;
     }
 
+    function jumpToHistory(turn) {
+        setSelectedTurn(turn);
+        setCurrentBoard(rules.copy_board(history[turn]));
+    }
+
+    const moves = history.map((gameboard, turn) => {
+        return (
+            <li key={turn}>
+                <button onClick={() => jumpToHistory(turn)}>
+                    Turn # {turn}
+                </button>
+            </li>
+        );
+    });
     return (
         <Layout>
             <div className={`${styles.game}`}>
@@ -106,8 +121,14 @@ export default function Connect4({ m, n }) {
                 </div>
 
                 <div className={`${styles["game-div"]}`}>
-                    <h2>Turn: {currentMove}</h2>
-                    <h2>Player Turn: {currentPlayer}</h2>
+                    <h2>Turn: {selectedTurn}</h2>
+                    <h2>Player Turn: { (selectedTurn % 2 === 0)? rules.PLAYER1 : rules.PLAYER2 }</h2>
+                </div>
+
+                <div className={`${styles["game-div"]}`}>
+                    <div className={`${styles["history"]}`}>
+                        <ul>{moves}</ul>
+                    </div>
                 </div>
 
                 {/* Not displayed by default */}

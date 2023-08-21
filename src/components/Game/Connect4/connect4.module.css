@@ -5,3 +5,18 @@
 .game-div {
     text-align: center;
 }
+
+
+.history ul {
+    display: flex;
+    flex-direction: column-reverse;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.history button {
+    width: 100px;
+    height: 40px;
+    margin: 4px;
+}
