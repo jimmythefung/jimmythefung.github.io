@@ -99,7 +99,7 @@ export default function Connect4({ m, n }) {
         return (
             <li key={turn}>
                 <button onClick={() => jumpToHistory(turn)}>
-                    Turn # {turn}
+                    Turn # {turn} ({(turn % 2 === 0)? rules.PLAYER1 : rules.PLAYER2})
                 </button>
             </li>
         );

@@ -16,7 +16,9 @@
 }
 
 .history button {
-    width: 100px;
+    width: 150px;
     height: 40px;
     margin: 4px;
+    text-align: left;
+    padding-left: 20px;
 }
