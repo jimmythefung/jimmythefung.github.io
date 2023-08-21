@@ -2,8 +2,8 @@
 // Interface
 // *****************
 let BLANK = "";
-export const PLAYER1 = "Red";
-export const PLAYER2 = "Green";
+export const PLAYER1 = "1";
+export const PLAYER2 = "2";
 
 export function create_board(m, n) {
     let empty_board = Array.from(Array(m), () => new Array(n).fill(BLANK));

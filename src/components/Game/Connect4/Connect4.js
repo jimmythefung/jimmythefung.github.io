@@ -40,6 +40,24 @@ export default function Connect4({ m, n }) {
         }
     }
 
+    const moves = history.map((gameboard, turn) => {
+        return (
+            <li key={turn}>
+                <button
+                    onClick={() => jumpToHistory(turn)}
+                    style={{
+                        backgroundColor: turn % 2 === 1 ? "#FFCCCB" : "#90EE90",
+                    }}
+                >
+                    Turn # {turn}
+                </button>
+            </li>
+        );
+    });
+
+    ////////////
+    // Helpers
+    ////////////
     function handleCellClick(row, column) {
         if (!isGameOver) {
             if (selectedTurn % 2 == 0) {
@@ -57,7 +75,10 @@ export default function Connect4({ m, n }) {
 
             // End turn
             setCurrentPlayer(otherPlayer);
-            const nextHistory = [...history.slice(0, selectedTurn + 1), rules.copy_board(newBoard)];
+            const nextHistory = [
+                ...history.slice(0, selectedTurn + 1),
+                rules.copy_board(newBoard),
+            ];
             setHistory(nextHistory);
             setSelectedTurn(nextHistory.length - 1);
             return true;
@@ -95,15 +116,6 @@ export default function Connect4({ m, n }) {
         setCurrentBoard(rules.copy_board(history[turn]));
     }
 
-    const moves = history.map((gameboard, turn) => {
-        return (
-            <li key={turn}>
-                <button onClick={() => jumpToHistory(turn)}>
-                    Turn # {turn} ({(turn % 2 === 0)? rules.PLAYER1 : rules.PLAYER2})
-                </button>
-            </li>
-        );
-    });
     return (
         <Layout>
             <div className={`${styles.game}`}>
@@ -122,7 +134,10 @@ export default function Connect4({ m, n }) {
 
                 <div className={`${styles["game-div"]}`}>
                     <h2>Turn: {selectedTurn}</h2>
-                    <h2>Player Turn: { (selectedTurn % 2 === 0)? rules.PLAYER1 : rules.PLAYER2 }</h2>
+                    <h2>
+                        Player Turn:{" "}
+                        {selectedTurn % 2 === 0 ? rules.PLAYER1 : rules.PLAYER2}
+                    </h2>
                 </div>
 
                 <div className={`${styles["game-div"]}`}>
