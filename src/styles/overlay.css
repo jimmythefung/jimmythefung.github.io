@@ -26,6 +26,7 @@
     padding: 1rem;
     border: 1px solid #ccc;
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+    animation: openModalFrames 0.5s ease-out forwards;
 }
 
 @media (min-width: 40rem) {
@@ -62,4 +63,17 @@
 .modal__action--continue {
     background: red;
     border-color: red;
+}
+
+@keyframes openModalFrames {
+    0% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(50%);
+    }
+    
 }
