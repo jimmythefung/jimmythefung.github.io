@@ -1,10 +1,10 @@
 import { useState, useRef } from "react";
 import styles from "./connect4.module.css";
-import Board from "../../Game/Board/Board";
-import Spinner from "../../Game/Spinner/Spinner";
+import Board from "../Board/Board";
+import Spinner from "../Spinner/Spinner";
 import Layout from "../../UI/Layout";
-import * as utils from "../../Scripts/utils";
 import * as rules from "../../Scripts/c4rules";
+import * as utils from "../../Scripts/utils";
 
 export default function Connect4({ m, n }) {
     const backdropref = useRef(null);
