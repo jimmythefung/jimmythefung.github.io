@@ -5,7 +5,7 @@
     align-items: center;
     background-color: black;
     height: 5vh;
-    /* Float mechanics */
+    /* Fixed mechanics */
     position: fixed;
     width: 100vw;
     top: 0;

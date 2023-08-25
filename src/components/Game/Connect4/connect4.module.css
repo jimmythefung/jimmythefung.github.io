@@ -6,6 +6,10 @@
     text-align: center;
 }
 
+.game-board {
+    position: sticky;
+    top: 100px;
+}
 
 .history ul {
     display: flex;
@@ -18,5 +22,10 @@
 .history button {
     width: 150px;
     height: 40px;
-    margin: 4px;
+    /* margin: 4px; */
+}
+
+.history button:hover {
+    text-align: left;
+    font-weight: bold;
 }

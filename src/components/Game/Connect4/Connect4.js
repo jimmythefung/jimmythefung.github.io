@@ -1,10 +1,10 @@
-import Board from "./Board";
-import Spinner from "./Spinner";
-import Layout from "../../UI/Layout";
+import { useState, useRef } from "react";
 import styles from "./connect4.module.css";
-import { useEffect, useState, useRef } from "react";
-import * as utils from "../../scripts/utils.js";
-import * as rules from "../../scripts/c4rules.js";
+import Board from "@/components/Game/Board/Board";
+import Spinner from "@/components/Game/Spinner/Spinner";
+import Layout from "@/components/UI/Layout";
+import * as utils from "@/components/Scripts/utils";
+import * as rules from "@/components/Scripts/c4rules";
 
 export default function Connect4({ m, n }) {
     const backdropref = useRef(null);
@@ -29,6 +29,7 @@ export default function Connect4({ m, n }) {
         }
     } else {
         // Game continues
+        utils.closeModal();
         if (currentPlayer === rules.PLAYER1) {
             if (p1UsesAI) {
                 handle_ai(500);
@@ -44,7 +45,7 @@ export default function Connect4({ m, n }) {
         return (
             <li key={turn}>
                 <button
-                    onClick={() => jumpToHistory(turn)}
+                    onMouseOver={() => jumpToHistory(turn)}
                     style={{
                         backgroundColor: turn % 2 === 1 ? "#FFCCCB" : "#90EE90",
                     }}
@@ -125,7 +126,7 @@ export default function Connect4({ m, n }) {
                     </h1>
                 </div>
 
-                <div className={`${styles["game-div"]}`}>
+                <div className={`${styles["game-div"]} ${styles["game-board"]}`}>
                     <Board
                         current_board={currentBoard}
                         onCellClick={handleCellClick}
@@ -140,10 +141,8 @@ export default function Connect4({ m, n }) {
                     </h2>
                 </div>
 
-                <div className={`${styles["game-div"]}`}>
-                    <div className={`${styles["history"]}`}>
-                        <ul>{moves}</ul>
-                    </div>
+                <div className={`${styles["game-div"]} ${styles["history"]}`}>
+                    <ul>{moves}</ul>
                 </div>
 
                 {/* Not displayed by default */}

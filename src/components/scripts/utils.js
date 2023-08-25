@@ -13,7 +13,7 @@ export function openModal(msg) {
     }
 }
 
-function closeModal() {
+export function closeModal() {
     if (typeof window !== "undefined") {
         var backdrop = document.querySelector(".backdrop");
         var modal = document.querySelector(".modal");
