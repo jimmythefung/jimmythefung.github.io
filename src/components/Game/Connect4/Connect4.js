@@ -3,8 +3,8 @@ import styles from "./connect4.module.css";
 import Board from "../Board/Board";
 import Spinner from "../Spinner/Spinner";
 import Layout from "../../UI/Layout";
-import * as rules from "../../Scripts/c4rules.js";
-import * as utils from "../../Scripts/utils.js";
+import * as rules from "../../scripts/c4rules.js";
+import * as utils from "../../scripts/utils.js";
 
 export default function Connect4({ m, n }) {
     const backdropref = useRef(null);

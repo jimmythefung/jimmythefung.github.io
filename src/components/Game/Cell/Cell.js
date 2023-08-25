@@ -1,5 +1,5 @@
 import styles from "./cell.module.css";
-import * as rules from "../../Scripts/c4rules.js";
+import * as rules from "../../scripts/c4rules.js";
 
 export default function Cell({ player, row, col, clickHandler }) {
     return (
