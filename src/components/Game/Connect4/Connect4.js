@@ -1,10 +1,10 @@
 import { useState, useRef } from "react";
 import styles from "./connect4.module.css";
-import Board from "@/components/Game/Board/Board";
-import Spinner from "@/components/Game/Spinner/Spinner";
-import Layout from "@/components/UI/Layout";
-import * as utils from "@/components/Scripts/utils";
-import * as rules from "@/components/Scripts/c4rules";
+import Board from "../..//Game/Board/Board";
+import Spinner from "../..//Game/Spinner/Spinner";
+import Layout from "../..//UI/Layout";
+import * as utils from "../..//Scripts/utils";
+import * as rules from "../..//Scripts/c4rules";
 
 export default function Connect4({ m, n }) {
     const backdropref = useRef(null);
@@ -126,7 +126,9 @@ export default function Connect4({ m, n }) {
                     </h1>
                 </div>
 
-                <div className={`${styles["game-div"]} ${styles["game-board"]}`}>
+                <div
+                    className={`${styles["game-div"]} ${styles["game-board"]}`}
+                >
                     <Board
                         current_board={currentBoard}
                         onCellClick={handleCellClick}

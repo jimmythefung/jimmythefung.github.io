@@ -1,4 +1,4 @@
-import Cell from "@/components/Game/Cell/Cell";
+import Cell from "../Cell/Cell";
 import styles from "./board.module.css";
 
 export default function Board({ current_board, onCellClick }) {
